@@ -1,5 +1,8 @@
 const { Place, State, City } = require('../models');
 
+const buildSlug = (value) =>
+  value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
 const placeController = {
   getAllPlaces: async (req, res) => {
     try {
@@ -70,7 +73,7 @@ const placeController = {
   createPlace: async (req, res) => {
     try {
       const { name, state: stateId, city: cityId, category, images, description, historicalImportance, bestTimeToVisit, entryFee, timings, nearbyAttractions, mapLink, rating, isPopular, featured } = req.body;
-      const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      const slug = buildSlug(name);
       
       const state = await State.findById(stateId);
       const city = await City.findById(cityId);
@@ -90,6 +93,99 @@ const placeController = {
       res.status(201).json(place);
     } catch (error) {
       res.status(400).json({ message: error.message });
+    }
+  },
+
+  updatePlace: async (req, res) => {
+    try {
+      const place = await Place.findById(req.params.id);
+
+      if (!place) {
+        return res.status(404).json({ message: 'Place not found' });
+      }
+
+      const {
+        name,
+        state: stateId,
+        city: cityId,
+        category,
+        images,
+        description,
+        historicalImportance,
+        bestTimeToVisit,
+        entryFee,
+        timings,
+        nearbyAttractions,
+        mapLink,
+        rating,
+        isPopular,
+        featured
+      } = req.body;
+
+      if (name) {
+        place.name = name;
+        place.slug = buildSlug(name);
+      }
+
+      if (stateId) {
+        const state = await State.findById(stateId);
+        if (!state) {
+          return res.status(404).json({ message: 'State not found' });
+        }
+        place.state = stateId;
+      }
+
+      if (cityId) {
+        const city = await City.findById(cityId);
+        if (!city) {
+          return res.status(404).json({ message: 'City not found' });
+        }
+        place.city = cityId;
+      }
+
+      const updates = {
+        category,
+        images,
+        description,
+        historicalImportance,
+        bestTimeToVisit,
+        entryFee,
+        timings,
+        nearbyAttractions,
+        mapLink,
+        rating,
+        isPopular,
+        featured
+      };
+
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value !== undefined) {
+          place[key] = value;
+        }
+      });
+
+      await place.save();
+      const updatedPlace = await Place.findById(place._id)
+        .populate('state', 'name slug')
+        .populate('city', 'name slug');
+
+      res.json(updatedPlace);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
+
+  deletePlace: async (req, res) => {
+    try {
+      const place = await Place.findByIdAndDelete(req.params.id);
+
+      if (!place) {
+        return res.status(404).json({ message: 'Place not found' });
+      }
+
+      res.json({ message: 'Place deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
   }
 };

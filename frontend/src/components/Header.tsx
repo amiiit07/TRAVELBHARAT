@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Moon, Sun, Compass } from 'lucide-react';
 
-const navLinks = [{ href: '/', label: 'Home' }, { href: '/places', label: 'All Places' }, { href: '/states', label: 'Explore States' }, { href: '/search', label: 'Search' }];
+const navLinks = [{ href: '/', label: 'Home' }, { href: '/places', label: 'All Places' }, { href: '/states', label: 'Explore States' }, { href: '/search', label: 'Search' }, { href: '/admin/login', label: 'Admin Login' }];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,9 +35,9 @@ export default function Header() {
           </Link>
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={`relative text-sm font-medium transition-colors ${pathname === link.href ? 'text-primary' : 'text-white/80 hover:text-white'}`}>
+              <Link key={link.href} href={link.href} className={`relative text-sm font-medium transition-colors ${pathname === link.href ? 'text-primary' : 'text-white/80 hover:text-white'} ${link.href === '/admin/login' ? 'px-4 py-2 rounded-lg bg-primary/20 text-primary hover:bg-primary/30' : ''}`}>
                 {link.label}
-                {pathname === link.href && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full" />}
+                {pathname === link.href && link.href !== '/admin/login' && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full" />}
               </Link>
             ))}
           </div>
@@ -54,7 +54,7 @@ export default function Header() {
           <div className="md:hidden py-4 border-t border-white/10">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${pathname === link.href ? 'text-primary' : 'text-white/80'}`}>
+                <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${pathname === link.href ? 'text-primary' : 'text-white/80'} ${link.href === '/admin/login' ? 'mt-2 px-4 py-2 rounded-lg bg-primary/20 text-primary w-fit' : ''}`}>
                   {link.label}
                 </Link>
               ))}

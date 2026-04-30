@@ -1,5 +1,8 @@
 const { State } = require('../models');
 
+const buildSlug = (value) =>
+  value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
 const stateController = {
   getAllStates: async (req, res) => {
     try {
@@ -25,7 +28,7 @@ const stateController = {
   createState: async (req, res) => {
     try {
       const { name, image, description, isUnionTerritory } = req.body;
-      const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      const slug = buildSlug(name);
       
       const state = new State({
         name,
@@ -44,15 +47,24 @@ const stateController = {
 
   updateState: async (req, res) => {
     try {
-      const state = await State.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true, runValidators: true }
-      );
-      
+      const state = await State.findById(req.params.id);
+
       if (!state) {
         return res.status(404).json({ message: 'State not found' });
       }
+
+      const { name, image, description, isUnionTerritory } = req.body;
+
+      if (name) {
+        state.name = name;
+        state.slug = buildSlug(name);
+      }
+      if (image !== undefined) state.image = image;
+      if (description !== undefined) state.description = description;
+      if (isUnionTerritory !== undefined) state.isUnionTerritory = isUnionTerritory;
+
+      await state.save();
+      
       res.json(state);
     } catch (error) {
       res.status(400).json({ message: error.message });

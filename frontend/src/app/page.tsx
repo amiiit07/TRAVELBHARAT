@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Search, Mountain, Waves, Trees, Landmark, Palmtree } from 'lucide-react';
 import api from '@/lib/api';
@@ -50,6 +51,7 @@ export default function Home() {
   const [popularPlaces, setPopularPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
@@ -72,7 +74,13 @@ export default function Home() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-4xl mx-auto">
             <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">Explore India <span className="gradient-text">State by State</span></h1>
             <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl mx-auto">Discover the magic of India through our curated collection of tourist destinations.</p>
-            <form onSubmit={(e) => { e.preventDefault(); if (searchQuery) window.location.href = `/search?q=${encodeURIComponent(searchQuery)}` }} className="max-w-2xl w-full mx-auto">
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const query = searchQuery.trim();
+              if (query) {
+                router.push(`/search?q=${encodeURIComponent(query)}`);
+              }
+            }} className="max-w-2xl w-full mx-auto">
               <div className="relative">
                 <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
                   <div className="flex items-center p-2">

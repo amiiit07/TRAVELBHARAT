@@ -25,9 +25,9 @@ export default function AdminDashboardPage() {
   };
 
   const menu = [
-    { title: 'Manage Places', desc: 'Add or edit places', icon: Castle, href: '/admin/places' },
-    { title: 'Manage States', desc: 'Add or edit states', icon: MapPin, href: '#' },
-    { title: 'Manage Cities', desc: 'Add or edit cities', icon: Building, href: '#' }
+    { title: 'Manage Content', desc: 'CRUD for places, states, and cities', icon: Castle, href: '/admin/places' },
+    { title: 'Manage States', desc: 'Open the unified content manager', icon: MapPin, href: '/admin/places' },
+    { title: 'Manage Cities', desc: 'Open the unified content manager', icon: Building, href: '/admin/places' }
   ];
 
   return (
