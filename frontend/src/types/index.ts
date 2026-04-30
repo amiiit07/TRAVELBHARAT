@@ -1,0 +1,4 @@
+export interface State { _id: string; name: string; slug: string; image: string; description: string; isUnionTerritory?: boolean; createdAt: string; }
+export interface City { _id: string; name: string; slug: string; state: State | string; image: string; description: string; createdAt: string; }
+export interface Place { _id: string; name: string; slug: string; state: State | string; city: City | string; category: string; images: string[]; description: string; historicalImportance?: string; bestTimeToVisit?: string; entryFee?: string; timings?: string; nearbyAttractions?: string[]; mapLink?: string; rating: number; isPopular: boolean; featured: boolean; createdAt: string; }
+export interface SearchResult { places: Place[]; states: State[]; cities: City[]; }
