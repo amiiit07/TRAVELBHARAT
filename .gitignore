@@ -1,0 +1,76 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+.env*.example
+
+# Node Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Next.js Build Artifacts
+.next/
+out/
+dist/
+build/
+
+# Development
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# IDE
+.editorconfig
+.prettierrc
+.prettierignore
+*.code-workspace
+
+# OS Files
+Thumbs.db
+*.bak
+*.tmp
+
+# Database
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Testing
+.nyc_output/
+coverage/
+
+# Runtime
+tmp/
+temp/
+logs/
+
+# Package Lock Files (Optional - uncomment if needed)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Build Output
+*.tsbuildinfo
+
+# Misc
+.cache/
+.parcel-cache/
+dist/
+.turbo/
+turbo.json
+
+# Local Development
+.env.local.backup
+.vscode-server/
