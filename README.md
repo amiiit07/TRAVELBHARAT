@@ -34,6 +34,13 @@ PORT=5000
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
+### Frontend (production)
+```
+NEXT_PUBLIC_API_URL=/_/backend/api
+```
+
+If the frontend and backend are deployed together on Vercel, `/_/backend/api` keeps requests on the same origin and avoids browser blocks against `localhost`.
+
 ## Admin
 - Username: `admin`
 - Password: `travelbharat2024`

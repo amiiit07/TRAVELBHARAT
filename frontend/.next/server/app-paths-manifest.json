@@ -1,8 +1,14 @@
 {
-  "/page": "app/page.js",
-  "/admin/places/page": "app/admin/places/page.js",
+  "/_not-found": "app/_not-found.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
   "/categories/[category]/page": "app/categories/[category]/page.js",
-  "/places/page": "app/places/page.js",
+  "/admin/places/page": "app/admin/places/page.js",
+  "/cities/[slug]/page": "app/cities/[slug]/page.js",
+  "/page": "app/page.js",
   "/place/[slug]/page": "app/place/[slug]/page.js",
-  "/states/page": "app/states/page.js"
+  "/places/page": "app/places/page.js",
+  "/states/[slug]/page": "app/states/[slug]/page.js",
+  "/states/page": "app/states/page.js",
+  "/search/page": "app/search/page.js"
 }

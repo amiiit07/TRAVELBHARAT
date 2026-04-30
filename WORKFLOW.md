@@ -521,6 +521,11 @@ NODE_ENV=development
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
+### 7.2.1 Frontend Production API URL
+```
+NEXT_PUBLIC_API_URL=/_/backend/api
+```
+
 ### 7.3 Next.js Configuration
 
 **Image Optimization (next.config.js):**

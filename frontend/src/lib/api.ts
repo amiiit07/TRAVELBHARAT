@@ -1,4 +1,26 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const LOCAL_API_URL = 'http://localhost:5000/api';
+const VERCEL_BACKEND_API_PATH = '/_/backend/api';
+
+function normalizeApiUrl(url: string) {
+  return url.replace(/\/+$/, '');
+}
+
+function getApiUrl() {
+  const configuredApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (configuredApiUrl) {
+    return normalizeApiUrl(configuredApiUrl);
+  }
+
+  if (typeof window !== 'undefined') {
+    const { hostname } = window.location;
+    const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
+    return isLocalhost ? LOCAL_API_URL : VERCEL_BACKEND_API_PATH;
+  }
+
+  return process.env.NODE_ENV === 'development' ? LOCAL_API_URL : VERCEL_BACKEND_API_PATH;
+}
+
+const API_URL = getApiUrl();
 
 async function fetchAPI(endpoint: string, options?: RequestInit, includeAuth = false) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null;
